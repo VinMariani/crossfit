@@ -213,7 +213,7 @@
     --input-height: 54px;
 
     --container-width: 1300px;   /*ширина контейнера*/ 
-    --container-padding-x:15px;  /*чтобы контент не слипался с краями*/  
+    --container-padding-x: 15px;  /*чтобы контент не слипался с краями*/  
 
     --transition-duration: 0.2s; 
 
@@ -229,12 +229,27 @@
     background-color: var(--color-dark);
  }
 
+ .title-medium {
+    font-size: clamp(20px, 2.8vw, 40px);
+    line-height: 1.3;
+    color: var(--color-light);
+ }
+
  a {
     color: var(--color-light);
  }
 
  a:hover{
     color: var(--color-light-grey);
+}
+
+p {
+    margin-block: 0;
+}
+
+/* нижний отступ для параграфов без класса (кроме последнего) */
+p:not([class]):not(:last-child) {
+    margin-bottom: 24px;
 }
 
 a, 
@@ -246,9 +261,14 @@ svg * {
 }
 
  .container {
-    max-width: calc(var(--container-width)+var(--container-padding-x)*2);
+    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
     margin-inline: auto;
     padding-inline: var(--container-padding-x);
+ }
+
+ .container-wide {
+    min-width: 1920px;
+    margin-inline: auto;
  }
 
  h1, h2, h3, h4, h5, h6 {
@@ -270,9 +290,35 @@ svg * {
     border: none;
     border-radius: var(--border-radius);
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .button:hover {
+    background-color: var(--color-light-grey);
+}
+
+.button.transparent {
+    position: relative;
+    height: var(--input-height);
+    padding-left: 31px;
+    padding-right: 80px;
+    background-color: transparent;
+    border: var(--border);
+}
+
+.button.transparent::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    height: 100%;
+    aspect-ratio: 1;
+    background: url('./icons/arrow-button.svg') center/70% no-repeat;
+    border: var(--border);
+    border-radius: 50%;
+}
+
+.button.transparent:hover {
+    color: var(--color-dark);
     background-color: var(--color-light-grey);
 }
 
@@ -425,6 +471,74 @@ svg * {
     transition-duration: var(--transition-duration);
 }
 
+.motivation-item:nth-child(even) {
+    background-color: var(--color-dark-alternate);
+}
+
+.motivation-item:nth-child(even) .motivation-card {
+    flex-direction: row-reverse;
+}
+
+.motivation-card {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: clamp(30px, 10.42vw, 200px);
+}
+
+.motivation-card-img {
+    margin-block: -60px;
+}
+
+.motivation-card-body {
+    padding-left: 35px;
+}
+
+.backdrop-title {
+    position: relative;
+    z-index: 2;
+}
+
+.backdrop-title::after {
+    content: attr(data-title);
+    position: absolute;
+    z-index: -1;
+    top: -0.45em;
+    left: -0.6em;
+    font-size: 2.8em;
+    font-family: var(--font-family-accent);
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-light-grey);
+}
+
+.backdrop-title::before {
+    content: "";
+    position: absolute;
+    right: calc(100% + 8px);
+    display: block;
+    width: 26px;
+    aspect-ratio: 1;
+    background: url('./icons/plus.svg') center/contain no-repeat;
+}
+
+.motivation-card-title:not(:last-child) {
+    margin-bottom: 14px;
+}
+
+.motivation-card-description {
+    max-width: 400px;
+}
+
+.motivation-card-description:not(:last-child) {
+    margin-bottom: 37px;
+}
+
+@media (max-width: 1919px) {
+    .motivation-card-img {
+        margin-block: -20px;
+    }
+}
+
 @media (max-width: 1024px) {
     .header {
         flex-wrap: wrap;
@@ -448,6 +562,16 @@ svg * {
 
     .banner {
         row-gap: 10px;
+    }
+
+    .motivation-card {
+        padding-block: 50px;
+    }
+
+    .motivation-card-img {
+        min-width: 30%;
+        height: auto;
+        margin-block: 0;
     }
 }
 
@@ -478,6 +602,24 @@ svg * {
 
     .banner-info::before {
         margin-right: 10px;
+    }
+
+    .motivation-card,
+    .motivation-item:nth-child(even) .motivation-card {
+        flex-direction: column-reverse;
+    }
+
+    .motivation-card {
+        row-gap: 30px;
+        padding-block: 30px;
+    }
+
+    .motivation-card-img {
+        max-width: 60%;
+    }
+
+    .motivation-card-description:not(:last-child) {
+        margin-bottom: 20px;
     }
 }
 
