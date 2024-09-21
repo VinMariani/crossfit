@@ -229,6 +229,10 @@
     background-color: var(--color-dark);
  }
 
+ .title-big {
+    font-size: clamp(24px, 3.12vw, 60px);
+}
+
  .title-medium {
     font-size: clamp(20px, 2.8vw, 40px);
     line-height: 1.3;
@@ -671,10 +675,6 @@ svg * {
     margin-bottom: 52px;
 }
 
-.title-big {
-    font-size: clamp(24px, 3.12vw, 60px);
-}
-
 .input {
     height: var(--input-height);
     padding-inline: 25px;
@@ -685,7 +685,8 @@ svg * {
     color: var(--color-light);
 }
 
-.input::placeholder {
+.input::placeholder,
+select.input:invalid {
     color: var(--color-light-grey);
 }
 
@@ -697,6 +698,15 @@ svg * {
     outline: none;
     background: var(--color-light-grey);
     color: var(--color-dark);
+}
+
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .join-us-form-input {
@@ -725,7 +735,6 @@ svg * {
 
 .location-title:not(:last-child) {
     margin-bottom: 14px;
-
 }
 
 .location-description:not(:last-child) {
@@ -764,6 +773,130 @@ svg * {
 
 .family-img {
     scroll-snap-align: start;
+}
+
+.calculate {
+    background-color: var(--color-dark-alternate);
+    padding-block: 146px;
+}
+
+.calculate-inner {
+    display: flex;
+    align-items: center;
+    column-gap: 36px;
+}
+
+.calculate-body {
+    /* чтобы ширина этого элемента стремилась к макс допустимому значению - flex-grow: 1*/
+    flex-grow: 1;
+    max-width: 627px;
+}
+
+.calculate-title:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.calculate-description {
+    max-width: 385px;
+}
+
+.calculate-description:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.calculate-form-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 30px;
+}
+
+.calculate-form-body:not(:last-child) {
+    margin-bottom: 26px;
+}
+
+.calculate-input.wide {
+    grid-column: -1/1;
+}
+
+.calculate-table-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 610px;
+}
+
+/* связка для центрирования элемента по обеим осям относительно своего родителя */
+/* top: 50%; */
+/* left: 50%;
+translate: -50% -50%; */
+.calculate-table-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-dark);
+}
+
+.calculate-table {
+    position: relative;
+    border-collapse: collapse;
+}
+
+.calculate-table :is(td, th) {
+    padding-right: 30px;
+}
+
+/* отступы для каждой второй (правой) ячейки */
+.calculate-table :is(td, th):not(:first-child) {
+    padding-left: 30px;
+}
+
+.calculate-table :is(td, th):not(:last-child) {
+    border-right: 1px solid var(--color-light-grey);
+}
+
+.calculate-table tbody td {
+    border-top: 1px solid var(--color-light-grey);
+}
+
+.calculate-table th {
+    padding-block: 20px;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--color-light);
+}
+
+.calculate-table tbody tr:last-child td:first-child {
+    position: relative;
+}
+
+.calculate-table tbody tr:last-child td:first-child::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: 1px;
+    background-color: var(--color-light-grey);
+}
+
+.calculate-table td {
+    padding-block: 14px;
+}
+
+.calculate-table tfoot td {
+    padding-top: 33px;
+    padding-bottom: 0;
+}
+
+.calculate-table tfoot {
+    color: var(--color-light);
 }
 
 @media (max-width: 1919px) {
@@ -828,6 +961,30 @@ svg * {
 
     .family-img {
         height: 360px;
+    }
+
+    .calculate {
+        padding-block: 100px;
+    }
+
+    .calculate-inner {
+        column-gap: 20px;
+    }
+
+    .calculate-form-body {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .calculate-button {
+        width: 100%;
+    }
+
+    .calculate-table :is(td, th) {
+        padding-block: 10px;
+    }
+
+    .calculate-table tfoot td {
+        padding-top: 10px;
     }
 }
 
@@ -933,6 +1090,19 @@ svg * {
 
     .family-img {
         height: 180px;
+    }
+
+    .calculate {
+        padding-block: 60px;
+    }
+
+    .calculate-inner {
+        flex-direction: column;
+        row-gap: 30px;
+    }
+
+    .calculate-table-wrapper::before {
+        display: none;
     }
 }
 
